@@ -13121,7 +13121,7 @@ div#notebook {
 NumPy Version: 1.18.1
 Python Version: 3.7.7 (default, Mar 26 2020, 10:32:53) 
 [Clang 4.0.1 (tags/RELEASE_401/final)]
-Ran on 2020-05-11T11:48:26.213024
+Ran on 2020-05-11T12:05:05.564968
 </pre>
 </div>
 </div>
@@ -13229,7 +13229,7 @@ Ran on 2020-05-11T11:48:26.213024
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.colorbar.Colorbar at 0x11943e810&gt;</pre>
+<pre>&lt;matplotlib.colorbar.Colorbar at 0x1186e9750&gt;</pre>
 </div>
 
 </div>
@@ -13451,13 +13451,134 @@ Ran on 2020-05-11T11:48:26.213024
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="A-helpful-function">A helpful function<a class="anchor-link" href="#A-helpful-function">&#182;</a></h2>
+<h2 id="Colormap-From-List">Colormap From List<a class="anchor-link" href="#Colormap-From-List">&#182;</a></h2><p>This makes a colormap more similar to how Matlab works. Some of what is done here can also be done directly in the colormaps, but this is just a demo</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Make a list with colors</span>
+<span class="n">nc</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">nc</span><span class="p">)</span>
+
+<span class="n">c0</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.36392156862745095</span><span class="p">,</span> <span class="mf">0.5755294117647058</span><span class="p">,</span> <span class="mf">0.7483921568627451</span><span class="p">],</span>
+      <span class="p">[</span><span class="mf">0.91529411764705880</span><span class="p">,</span> <span class="mf">0.2815686274509803</span><span class="p">,</span> <span class="mf">0.2878431372549019</span><span class="p">],</span>
+      <span class="p">[</span><span class="mf">0.44156862745098036</span><span class="p">,</span> <span class="mf">0.7490196078431373</span><span class="p">,</span> <span class="mf">0.4321568627450980</span><span class="p">]]</span>
+<span class="n">c1</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">c0</span><span class="p">)),</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">c0</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">]</span>
+<span class="n">c1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">ListedColormap</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span>
+
+<span class="c1">############### Plot it</span>
+<span class="c1"># create a dummy plot</span>
+<span class="n">_f</span><span class="p">,</span><span class="n">_a</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">pl</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)),</span><span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">_f</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mf">0.8</span><span class="p">))</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pl</span><span class="p">,</span><span class="n">cax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWcAAAAyCAYAAACAjBp9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAADh0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uMy4xLjMsIGh0dHA6Ly9tYXRwbG90bGliLm9yZy+AADFEAAAEnUlEQVR4nO3dP4geRRjH8d/vIiKIhXIYJFqIpDBYHCJpBEkaOUWIFoJWKQQtTCuk09JGAoIoCiFpVGyCKcQoaWyNEDQWapCgZ0IOEVIETlEfi9333n33382+eu/Oi98PHO87Mzszz868+1zY28s5IgQAyMvK2AEAAJpIzgCQIZIzAGSI5AwAGSI5A0CGSM4AkKFbUg/c9+DB+P3mjVpt8RieW5/GC7ljLHc8vufKmNUpXC00jq8eGy310z5uVLcdPzm2GcfssR2xxGxbc+xoiaNjzuoYLWvWG0s029pikbr2ryOe6Nintngaa9YSTzTbhsRZjTGmld2ztmx2dNR3t3nn8ZLaBsY4qM09bf92Pre2zWyPO+p72zxfv6Q4Wj61ifH3tTU+sR39Nr/fPBcR6xogOTlv3byhp155R1JoZZIEo9im4rX4Ki7emNbF9KM8rZv2a44X5UUYWukdL2rzT8drxFWO3zaeoqyv9FPU5u6Ntdo+uxbbsdZir55jZ6yt59Ix3uRc2vakI96k9Wtbp5lz2Gnd1TvezL5W1rDt3Fs/d9vnF5LLT4WLL8mV95N618qa6VfUp/Srlct+8rSs1HGKUDvHqZb75t+eT5XzmilP59suqz5X4jiNtW2e647zt/brXzNV1qS+j2Gnl2sxDuvXv2Zq6SdJJw6/uaqBuK0BABkiOQNAhkjOAJAhkjMAZIjkDAAZIjkDQIZIzgCQIZIzAGSI5AwAGSI5A0CGSM4AkCGSMwBkiOQMABkiOQNAhkjOAJAhkjMAZIjkDAAZcnT8yajGgfYlSVu7Gw520aqkX8cOAnNj/5bbbRHx0JAOyX+mStJWRDwyMCBkwvYF9m95sX/LzfaFoX24rQEAGSI5A0CGhiTnd3ctCiwC+7fc2L/lNnj/kn8gCABYHG5rAECGkpKz7XXb39m+bPv4bgeF/5btK7a/sX1xnp8aY7Fsn7S9WT6+Oqm7y/bntn8oX+8cM0a069i712z/Ul5/F20/mTLWjsnZ9h5Jb0l6QtIBSc/bPjBv8BjN4YhY43GspXBK0nqt7rik8xGxX9L5soz8nFJz7yTpRHn9rUXEJykDpfzL+aCkyxHxY0T8IelDSUeSQwUwSER8Iem3WvURSafL96clPb3QoJCkY+/mkpKc90n6uVLeKOuwPELSZ7a/sv3i2MFgLnsj4pokla93jxwPhjlm++vytkfSLamU5OyWOh7xWC6PRsTDKm5NvWz7sbEDAv5H3pb0gKQ1SdckvZHSKSU5b0i6r1K+V9LVodFhPBFxtXzdlHRGxa0qLJfrtu+RpPJ1c+R4kCgirkfEXxHxt6T3lHj9pSTnLyXtt32/7VslPSfp7PyhYpFs3277jsl7SY9LutTfCxk6K+lo+f6opI9HjAUDTL6plp5R4vW34398FBF/2j4m6ZykPZJORsS3c0WJMeyVdMa2VOz3+xHx6bghoY/tDyQdkrRqe0PSq5Jel/SR7Rck/STp2fEiRJeOvTtke03F7eArkl5KGovfEASA/PAbggCQIZIzAGSI5AwAGSI5A0CGSM4AkCGSMwBkiOQMABkiOQNAhv4B7og6Gzj4S2YAAAAASUVORK5CYII=
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Truncated-Colormap">Truncated Colormap<a class="anchor-link" href="#Truncated-Colormap">&#182;</a></h2><p>Sometimes it is helpful to make a colormap that is only part of another.</p>
+<p>There may be other ways to do this but this one works well too!</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">)[</span><span class="mi">400</span><span class="p">:]</span> <span class="c1"># skip first 40%</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Spectral</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">ListedColormap</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span>
+
+<span class="c1">############### Plot it</span>
+<span class="c1"># create a dummy plot</span>
+<span class="n">_f</span><span class="p">,</span><span class="n">_a</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">pl</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)),</span><span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">_f</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mf">0.8</span><span class="p">))</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pl</span><span class="p">,</span><span class="n">cax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWcAAAAyCAYAAACAjBp9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAADh0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uMy4xLjMsIGh0dHA6Ly9tYXRwbG90bGliLm9yZy+AADFEAAAEjElEQVR4nO3dMYgcVRzH8d/vTkQQC+UwiFqIBCFYHCI2gsZGTptoIWhjCkEL09il09JGrERQCEkKFZuQIGKUNLaJEDQWYpBDz4Qcp8EmBHH3b3EzyezszNybjbfzFr+fZnbe+7/3/rvv5n/L3N6dI0IAgLwsDZ0AAGAaxRkAMkRxBoAMUZwBIEMUZwDIEMUZADJ0W2rg2tOPxNbVa5ONdkOkO07r8fXYjv6ppRrWbsynEuvaeafpjximtEhS98cTI/lsurWpP5oOvVaIcEJM16wtmRfzpsTuPL+nOm5l3qmxDYNb50/JobYfHTvXsXdFW9N6XXtWn68eW39Nmp77DmMm19khdiL/6X1sW8Atl5FrsY1xRZs7XlzXYssH9fnc8eJOz9Gc5x9/rZ+OiLWGTFslF+etq9d09ou3ilWLN9xLlTfeZVv9mBJTi7WXJ9u75u0T03aUbrzKZWENjYtjpTTGZNvUeTkmEsbeiK2W3nGv9ZrmaTsfF0NGlYuubBsXbaPaedO4sSZjpvorX6Rt81Zj2vrq89Xnah6jhpjmvpvrzjK26fWpzTvuXi8lp7JtPK6sNyqe87j52B0z2V/2VceObml+d/Y39ZVPdqnypD2abCuPLs9b+idiWmK7Ym62jxv7G8cmxEjS8ZOvrqgnbmsAQIYozgCQIYozAGSI4gwAGaI4A0CGKM4AkCGKMwBkiOIMABmiOANAhijOAJAhijMAZIjiDAAZojgDQIYozgCQIYozAGSI4gwAGaI4A0CG3P0vlSqB9gVJ13c3HeyiFUlbQyeBmbF/i+2OiHi0z4Dkf1Ml6XpEPN4zIWTC9jn2b3Gxf4vN9rm+Y7itAQAZojgDQIb6FOePdi0LzAP7t9jYv8XWe/+SfyAIAJgfbmsAQIaSirPtNds/2b5o+/BuJ4X/lu112z/YPj/LT40xX7aP2N4sPr5att1j+xvbPxfHu4fMEc1a9u4d278X199528+nzLVjcba9LOkDSc9J2ifpFdv7Zk0eg3kmIlb5ONZCOCpprdZ2WNKZiNgr6Uxxjvwc1fTeSdL7xfW3GhFfpkyU8s75CUkXI+KXiPhb0meSDiSnCqCXiPhW0p+15gOSjhWPj0l6Ya5JIUnL3s0kpTjfL+m3yvlG0YbFEZK+tv2d7deHTgYz2RMRlyWpON47cD7o55Dt74vbHkm3pFKKsxva+IjHYnkyIh7T9q2pN20/NXRCwP/Ih5IelrQq6bKk91IGpRTnDUkPVs4fkHSpb3YYTkRcKo6bkk5o+1YVFssV2/dJUnHcHDgfJIqIKxExioixpI+VeP2lFOezkvbafsj27ZJelnRq9lQxT7bvtH1X+VjSs5IudI9Chk5JOlg8Pijp5IC5oIfym2rhRSVefzv+4aOI+Mf2IUmnJS1LOhIRP86UJYawR9IJ29L2fn8SEV8NmxK62P5U0n5JK7Y3JL0t6V1Jn9t+TdKvkl4aLkO0adm7/bZXtX07eF3SG0lz8RuCAJAffkMQADJEcQaADFGcASBDFGcAyBDFGQAyRHEGgAxRnAEgQxRnAMjQv7kFJOfO7/kZAAAAAElFTkSuQmCC
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="A-helpful-function">A helpful function<a class="anchor-link" href="#A-helpful-function">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">pretty_colorbar</span><span class="p">(</span><span class="n">pcm_obj</span><span class="p">,</span><span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="s2">&quot;5%&quot;</span><span class="p">,</span><span class="n">pad</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
@@ -13498,7 +13619,7 @@ Ran on 2020-05-11T11:48:26.213024
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
@@ -13518,13 +13639,13 @@ Ran on 2020-05-11T11:48:26.213024
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[10]:</div>
+    <div class="prompt output_prompt">Out[12]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.colorbar.Colorbar at 0x1199c8650&gt;</pre>
+<pre>&lt;matplotlib.colorbar.Colorbar at 0x118acc550&gt;</pre>
 </div>
 
 </div>
