@@ -13119,9 +13119,9 @@ div#notebook {
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Matplotlib Version: 3.1.3
 NumPy Version: 1.18.1
-Python Version: 3.7.6 (default, Jan  8 2020, 13:42:34) 
+Python Version: 3.7.7 (default, Mar 26 2020, 10:32:53) 
 [Clang 4.0.1 (tags/RELEASE_401/final)]
-Ran on 2020-03-05T16:15:14.530361
+Ran on 2020-05-11T11:48:26.213024
 </pre>
 </div>
 </div>
@@ -13229,7 +13229,7 @@ Ran on 2020-03-05T16:15:14.530361
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.colorbar.Colorbar at 0x11c295c90&gt;</pre>
+<pre>&lt;matplotlib.colorbar.Colorbar at 0x11943e810&gt;</pre>
 </div>
 
 </div>
@@ -13357,13 +13357,107 @@ Ran on 2020-03-05T16:15:14.530361
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="A-helpful-function">A helpful function<a class="anchor-link" href="#A-helpful-function">&#182;</a></h2>
+<h2 id="Standalone-Colorbars">Standalone Colorbars<a class="anchor-link" href="#Standalone-Colorbars">&#182;</a></h2><p>There are may ways to do this including using <code>imshow</code> or the like. This method is a bit cleaner.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># create a dummy plot</span>
+<span class="n">_f</span><span class="p">,</span><span class="n">_a</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">pl</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)),</span><span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">RdYlBu_r</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">_f</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mf">0.8</span><span class="p">))</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pl</span><span class="p">,</span><span class="n">cax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWcAAAAyCAYAAACAjBp9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAADh0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uMy4xLjMsIGh0dHA6Ly9tYXRwbG90bGliLm9yZy+AADFEAAAFE0lEQVR4nO3dv4tcVRjG8ee5IyKIohIMohYiKQwii4iNILGRaBMtBMUihaCF+QPSaWkjViIohKRRsQmmEKOksTVC0FioQYPGhCxiF4iaua/FPTNzf83sncXdOYPfD2zmnvf8emdO5k24O5s4IgQAyEux6gQAAF0UZwDIEMUZADJEcQaADFGcASBDFGcAyNBNQwfefsf+GN+4Ngs4/WI1Yp4ErNaj6w/qNmrzW2uqtqZbMbf2SdHWPs286ktOe2rj7a3XaC0x7es8pTn7uDXAnfGSW32zl6b1XGbdvfm5NqrnJVfnuaq1bjvntPGsHSla/1hm1EZHc8E5492aV+29YM2e8VK0QrVG52Oj9bFRexgwbt6aUcsrhozr2TPmXS8a1+6bjWmkXh/XeQnbOXdj0RNbvKYUrTyjN/d6aOs9Gy9nRHdamtN7vI08uk9j0Zyl10h+0V+nI+KgljC4ON/455oeeuSoPErvsqKQR5aL9PYeeRqTJBdu9GtUdGLTObW2C0ujoneN6rpQUVhFLVZvV9eFitGs7Xb/qN4upv31OY090nrNPazCs/aoJ1Z9pafvVp6t9ijN7dtj/pi0zuRI7EZ7lK4n8WrM4jlFbU61xtZjrFJ2qULjqu1yGpOkQuNpbNY/VtETm81prrFovKOKKcr0FbN2mWL1/nLSjmksJmPKnjUac1r90/G1+dOv6MYa7WZ/dNaInjmL15j0xziqvnEoJmPGIY3LZruMauxkjc74ejvNnazd2Cft29oz0nWZ9ogyFGU5jTfGtNrN/nKa52Rsvd03pyxj6MvVPLb6b4XoWWNeO/rHSNLL+nGPlsRtDQDIEMUZADJEcQaADFGcASBDFGcAyBDFGQAyRHEGgAxRnAEgQxRnAMgQxRkAMkRxBoAMUZwBIEMUZwDIEMUZADJEcQaADFGcASBDFGcAyJCj81/3zBlon5d0fWfTwQ7aI+mPVSeBbeP81tstEfHwMhMG/zdVkq5HxGNLJoRM2D7L+a0vzm+92T677BxuawBAhijOAJChZYrz+zuWBXYD57feOL/1tvT5Df6GIABg93BbAwAyNKg42z5o+wfbF2wf3emk8N+yfdH2d7bPbee7xthdto/Z3kwfX53E7rL9pe2f0uOdq8wR/eac3Zu2f0/vv3O2nx2y1pbF2fZI0ruSnpG0X9JLtvdvN3mszFMRscHHsdbCcUkHW7Gjks5ExD5JZ1Ib+Tmu7tlJ0jvp/bcREZ8NWWjI35wfl3QhIn6OiL8lfSzp0OBUASwlIr6S9GcrfEjSiXR9QtJzu5oUBplzdtsypDjfK+m3WvtSimF9hKQvbH9j+9VVJ4Nt2RsRVyQpPd694nywnCO2v023PQbdkhpSnN0T4yMe6+WJiHhU1a2p120/ueqEgP+R9yQ9KGlD0hVJbw+ZNKQ4X5J0f619n6TLy2aH1YmIy+lxU9JJVbeqsF6u2r5HktLj5orzwUARcTUixhFRSvpAA99/Q4rz15L22X7A9s2SXpR0avupYjfZvtX2bZNrSU9LOr94FjJ0StLhdH1Y0qcrzAVLmPyhmjyvge+/Lf/ho4i4YfuIpNOSRpKORcT328oSq7BX0knbUnXeH0bE56tNCYvY/kjSAUl7bF+S9IaktyR9YvsVSb9KemF1GWKeOWd3wPaGqtvBFyW9NmgtfkIQAPLDTwgCQIYozgCQIYozAGSI4gwAGaI4A0CGKM4AkCGKMwBkiOIMABn6F5X6cE3lfXgpAAAAAElFTkSuQmCC
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># create a dummy plot</span>
+<span class="n">_f</span><span class="p">,</span><span class="n">_a</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">pl</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)),</span><span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">RdYlBu_r</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">_f</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pl</span><span class="p">,</span><span class="n">cax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="A-helpful-function">A helpful function<a class="anchor-link" href="#A-helpful-function">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">pretty_colorbar</span><span class="p">(</span><span class="n">pcm_obj</span><span class="p">,</span><span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="s2">&quot;5%&quot;</span><span class="p">,</span><span class="n">pad</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
@@ -13404,7 +13498,7 @@ Ran on 2020-03-05T16:15:14.530361
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
@@ -13424,13 +13518,13 @@ Ran on 2020-03-05T16:15:14.530361
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[8]:</div>
+    <div class="prompt output_prompt">Out[10]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.colorbar.Colorbar at 0x11c5e14d0&gt;</pre>
+<pre>&lt;matplotlib.colorbar.Colorbar at 0x1199c8650&gt;</pre>
 </div>
 
 </div>
